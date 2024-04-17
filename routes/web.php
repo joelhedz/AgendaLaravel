@@ -1,5 +1,7 @@
 <?php
 
+use App\Http\Controllers\ContactoController;
+use App\Http\Controllers\CorreoController;
 use Illuminate\Support\Facades\Route;
 
 /*
@@ -13,9 +15,28 @@ use Illuminate\Support\Facades\Route;
 |
 */
 
+$PersonasController = "App\Http\Controllers\PersonaController";
+$ContactosController = "App\Http\Controllers\ContactoController";
+$CorreoController = "App\Http\Controllers\CorreoController";
+
+
 Route::get('/', function () {
-    return view('welcome');
+    return view('layouts.home');
 });
+
+Route::resource('/personas', $PersonasController);
+
+Route::resource('/contactos', $ContactosController);
+
+Route::get('/contactos/{idPersona}', [ContactoController::class, 'show']);
+
+Route::get('/contactos/create/{idContacto}', [ContactoController::class, 'create']);
+
+Route::resource('/correos', $CorreoController);
+
+Route::get('/correos/{idPersona}', [CorreoController::class, 'show']);
+
+Route::get('/correos/create/{idCorreo}', [CorreoController::class, 'create']);
 
 Route::middleware([
     'auth:sanctum',
